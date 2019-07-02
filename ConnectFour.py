@@ -34,17 +34,31 @@ def switchTurn(turnNum):
     else:
        return "O"
 
-def winHor(board):
+def winHor(board, turn):
     for i in range(0, 6):
         for j in range (0, 4):
             if board[i][j] == turn and board[i][j+1] == turn and board[i][j+2] == turn and board[i][j+3] == turn:
                 return True
     return False
 
-def winVert(board):
+def winVert(board, turn):
     for i in range(0, 7):
-        for j in range(0, 4):
+        for j in range(0, 3):
             if board[j][i] == turn and board[j+1][i] == turn and board[j+2][i] == turn and board[j+3][i] == turn:
+                return True
+    return False
+
+def winDiaRight(board, turn):
+    for i in range(0, 4):
+        for j in range(3, 6):
+            if board[j][i] == turn and board[j-1][i+1] == turn and board[j-2][i+2] == turn and board[j-3][i+3] == turn:
+                return True
+    return False
+
+def winDiaLeft(board, turn):
+    for i in range(3, 7):
+        for j in range(3, 6):
+            if board[j][i] == turn and board[j-1][i-1] == turn and board[j-2][i-2] == turn and board[j-3][i-3] == turn:
                 return True
     return False
 
@@ -55,7 +69,8 @@ print("Welcome to Connect Four!")
 showBoard(board)
 
 while win == False:
-    print("Player", turn, "goes first")
+    print("Player", turn, end="")
+    print("'s turn!")
 
     goodCol = False
     goodRow = False
@@ -70,14 +85,14 @@ while win == False:
     board = placeMove(board, colSpace, turn)
     showBoard(board)
 
-    winHor = winHor(board)
-    winVert = winVert(board)
+    winHorBol = winHor(board, turn)
+    winVertBol = winVert(board, turn)
+    winDiaRightBol = winDiaRight(board, turn)
+    winDiaLeftBol = winDiaLeft(board, turn)
 
-    if winHor or winVert:
-        print("WIN!")
+    if winHorBol or winVertBol or winDiaRightBol or winDiaLeftBol:
+        print("Player", turn, "Wins")
         win = True
 
     turnNum += 1
     turn = switchTurn(turnNum)
-
-
