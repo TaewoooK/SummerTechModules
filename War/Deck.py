@@ -1,5 +1,4 @@
 from Card import Card
-import random
 class Deck:
 
     def __init__(self):
@@ -12,19 +11,15 @@ class Deck:
         if len(self.deck) > 0:    
             return list.pop(self.deck)
         return None
-    
-    def shuffle(self):
-        random.shuffle(self.deck)
-        return self.__str__()
 
     def addCard(self, card):
         self.deck.append(card)
 
     def __str__(self):
-        if len(self.deck) == 0:
+        if len(self.deck) <= 0:
             return "Empty"
         all = ""
-        for i in range(0, 52):
+        for i in range(0, len(self.deck)):
             all += str(self.deck[i]) + ", "
         return all
     
