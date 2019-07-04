@@ -1,5 +1,8 @@
 from Deck import Deck
 import random
+import os
+
+os.system('cls' if os.name == 'nt' else 'clear')
 
 def changeValue(Deck):
     for i in range(len(Deck.deck)):
@@ -41,6 +44,9 @@ for i in range (len(p1Deck.deck)):
     value += p1Deck.deck[i].getValue()
 print(p1Deck)
 print("The total value:", value)
+print("==========================")
+print("Player 2's top card")
+print(p2Deck.deck[0])
 
 ans = False
 again = True
@@ -49,6 +55,7 @@ again = True
 while again == True:
     ans = False
     while ans == False:
+        print("==========================")
         option = int(input("Type \"1\" to hit, Type \"2\" to pass "))
         if option == 1:
             p1Deck.addCard(mainDeck.dealCard())
@@ -61,6 +68,7 @@ while again == True:
 
             for i in range (len(p1Deck.deck)):
                 if p1Deck.deck[i].getValue() == 11:
+                    print("==========================")
                     ace = input("Do you want to change the value of Ace? (y/n) ")
                     if ace == "y":
                         if p1Deck.deck[i].getValue() == 11:
@@ -81,8 +89,49 @@ while again == True:
         else:
             print("Invalid Input")
 
+if value > 21:
+    print("==========================")
+    print("Player 1 is over 21")
+
 #Player 2 Computer Start...
+p2 = True
+while p2 == True:
+    p2Value = 0
+    for i in range (len(p2Deck.deck)):
+        p2Value += p2Deck.deck[i].getValue()
 
+    if p2Value <= 13:
+        p2Deck.addCard(mainDeck.dealCard())
+    else:
+        p2 = False
 
+    for i in range (len(p1Deck.deck)):
+        if p1Deck.deck[i].getValue() == 11:
+            if p2Value > 20:
+                p2Deck.deck[i].setValue(1)
 
+    p2Value = 0
+    for i in range (len(p2Deck.deck)):
+        p2Value += p2Deck.deck[i].getValue()
+
+print("Player 2's value:", end=" ")
+print(p2Value)
+
+if p2Value > 21:
+    print("Player 2 is over 21")
+
+#Win statements
+print("==========================")
+if value > 21 and p2Value > 21:
+    print("Both lose")
+elif p2Value > 21:
+    print("Player 1 Wins!")
+elif value > 21:
+    print("Player 2 Wins!")
+elif value > p2Value:
+    print("Player 1 Wins!")
+elif p2Value > value:
+    print("Player 2 Wins!")
+else:
+    print("There is a tie!")
 
